@@ -75,6 +75,31 @@ button{border-color:#ffe165aa;color:#ffe97d;background:#06135e99;margin-top:24px
       @keyframes lamp-glow{to{box-shadow:0 0 25px #ffcd2933,0 10px 30px #0004,inset 0 -6px 0 #00caff33}}
     }
     body.motion-paused *,body.motion-paused *:before,body.motion-paused:before,body.motion-paused:after{animation-play-state:paused!important}
+  
+/* Layered fire, glowing wick and metallic bowls. */
+.lamps{isolation:isolate;overflow:visible}
+.diya{isolation:isolate;animation:none!important;background:radial-gradient(ellipse at 50% 0%,#ffdc8566,transparent 58%),linear-gradient(105deg,#071b51 0%,#176c99 24%,#0c284f 48%,#155786 73%,#040c27 100%);border-top:3px solid #ffe6a3;box-shadow:inset 0 3px 4px #ffc86177,inset 0 -7px 10px #0008,0 8px 18px #0006,0 1px 1px #55e7ff}
+.diya:before{content:'';animation:none!important;inset:-7px 0 auto;left:0;top:-7px;width:100%;height:12px;border-radius:50%;transform:none;background:radial-gradient(ellipse,#ffb841 0%,#6e3a14 36%,#06142a 73%);border:1px solid #ffd98c;box-shadow:0 -3px 12px #ffac4033;z-index:0}
+.diya:nth-child(2):before{inset:-7px 0 auto;left:0;top:-7px;width:100%;height:12px;animation:none}
+.diya:after{content:'';inset:11px 14% auto;height:1px;background:linear-gradient(90deg,transparent,#8befff,transparent);box-shadow:0 3px 7px #02d8ff66}
+.wick{position:absolute;left:calc(50% - 2px);top:-15px;width:4px;height:15px;background:linear-gradient(#ffecc0,#ff8e24 35%,#201315 65%);border-radius:3px;transform:rotate(7deg);box-shadow:0 -3px 5px #ff8c20;z-index:3}
+.flame{position:absolute;left:calc(50% - 12px);bottom:calc(100% + 6px);width:24px;height:52px;border-radius:52% 48% 45% 45% / 80% 80% 25% 25%;background:radial-gradient(ellipse at 50% 88%,#428bff 0%,#73cfff 8%,transparent 24%),radial-gradient(ellipse at 50% 72%,#fffce1 10%,#ffe38a 38%,#ffb424 65%,#ff641400 78%);transform-origin:50% 100%;filter:drop-shadow(0 0 5px #ffcf5b) drop-shadow(0 0 13px #ff9c2444);z-index:2}
+.flame:before{content:'';position:absolute;inset:0 1px 9px;background:linear-gradient(0deg,#fff6be,#ffd04c 62%,#ffaf1900);border-radius:70% 30% 45% 45% / 85% 80% 25% 25%;transform:skewX(-5deg);opacity:.6}
+.flame i{position:absolute;left:35%;bottom:5%;width:30%;height:43%;border-radius:50% 50% 35% 35%;background:linear-gradient(#fffef4,#fff5a4 70%,#9edaff);filter:blur(.5px)}
+.light-halo{position:absolute;left:50%;bottom:45%;width:150px;height:160px;transform:translateX(-50%);background:radial-gradient(ellipse at 50% 65%,#ffbc3933,transparent 67%);pointer-events:none;z-index:-1}
+.orbit{position:absolute;left:-16%;bottom:-11px;width:132%;height:15px;border-radius:50%;border:1px solid #39ddff66;box-shadow:0 0 9px #17d7ff33;z-index:-1}
+.orbit:after{content:'';position:absolute;left:12%;top:1px;width:16%;height:2px;border-radius:50%;background:#b5faff;box-shadow:0 0 8px #36edff}
+.diya:nth-child(2) .flame{width:30px;height:65px;left:calc(50% - 15px)}
+@media(prefers-reduced-motion:no-preference){
+.flame{animation:living-flame .95s ease-in-out infinite alternate}.flame:before{animation:flame-tip .63s ease-in-out infinite alternate}.light-halo{animation:warm-pulse 1.4s ease-in-out infinite alternate}.orbit{animation:orbit-light 3s linear infinite}
+.diya:nth-child(2) .flame{animation-delay:-.42s;animation-duration:1.13s}.diya:nth-child(3) .flame{animation-delay:-.71s;animation-duration:.81s}.diya:nth-child(2) .light-halo{animation-delay:-.8s}
+@keyframes living-flame{0%{transform:rotate(-4deg) scale(.96,1.03)}35%{transform:rotate(2deg) scale(1.03,.95)}65%{transform:rotate(-1deg) scale(.95,1.07)}100%{transform:rotate(4deg) scale(1.02,.98)}}
+@keyframes flame-tip{to{transform:skewX(8deg) scaleX(.88)}}
+@keyframes warm-pulse{from{opacity:.65}to{opacity:1}}
+@keyframes orbit-light{50%{opacity:.45;transform:scaleX(.92)}100%{opacity:1;transform:scaleX(1)}}
+}
+@media(max-width:540px){.flame{width:20px;height:42px;left:calc(50% - 10px)}.diya:nth-child(2) .flame{width:25px;height:53px;left:calc(50% - 12px)}.light-halo{width:120px;height:135px}.orbit{bottom:-9px;height:12px}}
+
   </style>
 </head>
 <body>
@@ -87,7 +112,7 @@ button{border-color:#ffe165aa;color:#ffe97d;background:#06135e99;margin-top:24px
     <h1>Happy<span>Deepavali</span></h1>
     <p class="family">Thousand Lights,<span>One Family</span></p>
     <p class="wish">May the light we share bring us closer,<br>fill our hearts with joy,<br>and brighten every new beginning.</p>
-    <div class="lamps" aria-hidden="true"><div class="diya"></div><div class="diya"></div><div class="diya"></div></div>
+    <div class="lamps" aria-hidden="true"><div class="diya"><span class="light-halo"></span><span class="wick"></span><span class="flame"><i></i></span><span class="orbit"></span></div><div class="diya"><span class="light-halo"></span><span class="wick"></span><span class="flame"><i></i></span><span class="orbit"></span></div><div class="diya"><span class="light-halo"></span><span class="wick"></span><span class="flame"><i></i></span><span class="orbit"></span></div></div>
     <button id="celebrate" type="button">✦ &nbsp; Send a little light</button>
     <p class="sender">From<strong>IT DEPARTMENT</strong></p>
     <p class="signature">Wishing you & your loved ones happiness</p>
