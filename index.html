@@ -179,6 +179,7 @@ body.with-photo main h1{font-size:clamp(48px,7svh,80px)}
 
 .save-status{font:10px Arial,sans-serif;color:#c9efff;margin:0;max-width:260px;line-height:1.4;text-align:center}.save-status:empty{display:none}button:disabled{opacity:.6;cursor:wait}
 @media(max-width:540px) and (min-height:540px) and (max-height:620px) and (orientation:portrait){body.with-photo main{padding:17px 24px 15px}body.with-photo .wish{display:none}body.with-photo main h1{font-size:35px}body.with-photo .greeting-portrait{width:56px;height:56px}body.with-photo .family{font-size:12px;padding:3px 18px}body.with-photo .family span{font-size:17px}body.with-photo .celebration-scene{height:48px}body.with-photo .lamps{height:65px}body.with-photo .signature{font-size:6px}}
+.portrait-actions #save-greeting{background:transparent;color:#bdeeff;border:0;border-bottom:1px solid #7adeff55;border-radius:0;font-size:10px;font-weight:normal;letter-spacing:.04em;padding:7px 10px;min-height:32px;box-shadow:none}.portrait-actions #save-greeting:hover{color:#ffe170;border-color:#ffe170}.portrait-actions{margin:0}.save-status{font-size:9px}
 </style>
 </head>
 <body>
@@ -204,13 +205,13 @@ body.with-photo main h1{font-size:clamp(48px,7svh,80px)}
     <h1 tabindex="-1">Happy<span>Deepavali</span></h1>
     <p class="family">Thousand Lights,<span>One Family</span></p>
     <figure id="greeting-portrait" class="greeting-portrait" hidden><img id="greeting-photo" alt="Your personal Deepavali portrait" width="640" height="640"></figure>
-    <div class="portrait-actions" id="portrait-actions" hidden><button type="button" id="save-greeting">Save my greeting</button><button type="button" id="change-photo">Change photo</button></div>
-    <p id="save-status" class="save-status" role="status"></p>
     <p class="wish">May the light we share bring us closer,<br>fill our hearts with joy,<br>and brighten every new beginning.</p>
     <div class="lamps" aria-hidden="true"><div class="diya"><span class="light-halo"></span><span class="wick"></span><span class="flame"><i></i></span><span class="orbit"></span></div><div class="diya"><span class="light-halo"></span><span class="wick"></span><span class="flame"><i></i></span><span class="orbit"></span></div><div class="diya"><span class="light-halo"></span><span class="wick"></span><span class="flame"><i></i></span><span class="orbit"></span></div></div>
     <div class="celebration-scene" role="group" aria-label="Celebrate with sparklers"><svg viewBox="0 0 130 140" aria-hidden="true" class="celebrant"><g class="person-body"><circle cx="61" cy="45" r="10" fill="#e8b77e"/><path d="M50 40Q51 24 64 32Q76 34 71 45L66 38Z" fill="#10234b"/><path d="M50 61Q61 54 72 61L80 103H43Z" fill="#13cde8" stroke="#b0f9ff" stroke-width="1.5"/><path d="M52 104L49 130M69 104L75 130" stroke="#ecdcbd" stroke-width="7" stroke-linecap="round"/><path d="M50 65L31 89" stroke="#e8b77e" stroke-width="6" stroke-linecap="round"/><g class="sparkler-arm"><path d="M72 65L92 48L99 32" stroke="#e8b77e" stroke-width="6" stroke-linecap="round" fill="none"/><path d="M99 32L105 13" stroke="#e4f7ff" stroke-width="2"/><g class="sparkler-rays" stroke="#ffe27a" stroke-width="2" stroke-linecap="round"><path d="M105 0V6M105 20V27M91 13H97M113 13H121M95 3L100 8M111 19L117 25M95 23L100 18M112 7L117 2"/><circle cx="105" cy="13" r="3" fill="#fff" stroke="none"/></g></g></g><ellipse cx="60" cy="136" rx="30" ry="2" fill="#3be4ff" opacity=".3"/></svg><button id="celebrate" type="button">✦ &nbsp; Send a little light</button><svg viewBox="0 0 130 140" aria-hidden="true" class="celebrant"><g class="person-body"><circle cx="61" cy="45" r="10" fill="#e8b77e"/><path d="M50 40Q51 24 64 32Q76 34 71 45L66 38Z" fill="#10234b"/><path d="M50 61Q61 54 72 61L80 103H43Z" fill="#13cde8" stroke="#b0f9ff" stroke-width="1.5"/><path d="M52 104L49 130M69 104L75 130" stroke="#ecdcbd" stroke-width="7" stroke-linecap="round"/><path d="M50 65L31 89" stroke="#e8b77e" stroke-width="6" stroke-linecap="round"/><g class="sparkler-arm"><path d="M72 65L92 48L99 32" stroke="#e8b77e" stroke-width="6" stroke-linecap="round" fill="none"/><path d="M99 32L105 13" stroke="#e4f7ff" stroke-width="2"/><g class="sparkler-rays" stroke="#ffe27a" stroke-width="2" stroke-linecap="round"><path d="M105 0V6M105 20V27M91 13H97M113 13H121M95 3L100 8M111 19L117 25M95 23L100 18M112 7L117 2"/><circle cx="105" cy="13" r="3" fill="#fff" stroke="none"/></g></g></g><ellipse cx="60" cy="136" rx="30" ry="2" fill="#3be4ff" opacity=".3"/></svg></div>
     <p class="sender">From<strong>IT DEPARTMENT</strong></p>
     <p class="signature">Wishing you & your loved ones happiness</p>
+    <div class="portrait-actions" id="portrait-actions" hidden><button type="button" id="save-greeting">↓ Save keepsake</button></div>
+    <p id="save-status" class="save-status" role="status"></p>
     <p id="announcement" class="sr-only" role="status"></p>
   </main>
   <script>
@@ -306,7 +307,8 @@ body.with-photo main h1{font-size:clamp(48px,7svh,80px)}
         const buffer = document.createElement('canvas');buffer.width=640;buffer.height=640;
         buffer.getContext('2d').drawImage(image,(image.naturalWidth-side)/2,(image.naturalHeight-side)/2,side,side,0,0,640,640);
         photoData=buffer.toDataURL('image/jpeg',.9);
-        syncPhoto();photoStatus.textContent='Your photo is ready. Retake or choose another if you wish.';
+        syncPhoto();photoStatus.textContent='Your photo is ready.';
+        photoBusy=false;openButton.disabled=false;openCelebration(false);
       } catch(error) {
         if(version===photoVersion) photoStatus.textContent='This photo could not be opened. Try a JPG or PNG, or continue without a photo.';
       } finally {
@@ -319,11 +321,6 @@ body.with-photo main h1{font-size:clamp(48px,7svh,80px)}
     document.querySelector('#camera-file').addEventListener('change',selectPhoto);
     document.querySelector('#photo-file').addEventListener('change',selectPhoto);
     document.querySelector('#remove-photo').addEventListener('click',()=>{photoData='';syncPhoto();photoStatus.textContent='Photo removed from your greeting.';});
-    document.querySelector('#change-photo').addEventListener('click',()=>{
-      celebrationOpened=false;cancelAnimationFrame(frame);greeting.hidden=true;welcome.hidden=false;
-      document.body.classList.add('celebration-waiting');
-      document.querySelector('#take-selfie').focus({preventScroll:true});
-    });
     async function saveGreeting() {
       if(!photoData) return;
       const button=document.querySelector('#save-greeting');const status=document.querySelector('#save-status');
@@ -362,12 +359,12 @@ body.with-photo main h1{font-size:clamp(48px,7svh,80px)}
     document.querySelector('#save-greeting').addEventListener('click',saveGreeting);
     syncPhoto();
 
-    document.querySelector('#open-celebration').addEventListener('click', () => {
+    function openCelebration(requestFullscreen = true) {
       if (celebrationOpened || photoBusy) return;
       // Request synchronously inside the tap so browser activation is preserved.
       const root = document.documentElement;
       try {
-        if (!document.fullscreenElement && root.requestFullscreen) {
+        if (requestFullscreen && !document.fullscreenElement && root.requestFullscreen) {
           const request = root.requestFullscreen();
           if (request && request.catch) request.catch(() => {});
         }
@@ -378,7 +375,8 @@ body.with-photo main h1{font-size:clamp(48px,7svh,80px)}
       document.body.classList.remove('celebration-waiting');
       resize(); start();
       document.querySelector('h1').focus({preventScroll:true});
-    });
+    }
+    document.querySelector('#open-celebration').addEventListener('click',()=>openCelebration(true));
     document.addEventListener('fullscreenchange',resize);
     resize();
   </script>
