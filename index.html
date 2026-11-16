@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#180c22">
+  <meta name="theme-color" content="#06115b">
   <meta name="description" content="Happy Deepavali from Westports IT Department. Wishing you light, love and happiness.">
   <title>Happy Deepavali ✨</title>
   <style>
@@ -42,6 +42,24 @@
       h1{font-size:clamp(52px,15vw,72px)}.wish{font-size:13px;margin-top:11px}.rule{margin-top:10px}
       .lamps{height:96px}button{margin-top:17px}.sender{margin-top:13px}.signature{margin-top:12px}
     }
+  
+/* Royal blue, cyan, white and gold: inspired by our IT kolam. */
+html{background:#06115b}body{background:radial-gradient(ellipse at 50% 35%,#123bc0 0%,#081b7b 46%,#030b38 100%);color:#fff}
+main{max-width:620px;margin:auto;padding:42px 32px 32px;overflow:hidden}
+main:before{inset:12px;border:2px solid #ffd02f;border-radius:180px 180px 22px 22px;box-shadow:inset 0 0 28px #05cfff12,0 0 22px #ffc40012}
+main:after{inset:20px;border:1px solid #eafaff99;border-radius:172px 172px 16px 16px}
+.brand{padding-bottom:14px;margin-bottom:18px}.brand:after{background:linear-gradient(90deg,transparent,#ffe361,transparent)}.brand img{width:190px;filter:brightness(0) invert(1);opacity:1}
+.eyebrow{color:#9aefff;font-size:9px;letter-spacing:.25em;margin-bottom:14px}
+.kolam{width:150px;height:150px;object-fit:contain;filter:drop-shadow(0 0 20px #00d5ff44);margin:0 0 14px}
+h1{font-size:clamp(66px,9vw,104px);text-shadow:0 3px 18px #0005}h1 span{background:linear-gradient(110deg,#ffbd05,#fff6a9 45%,#ffcc00);background-clip:text;-webkit-background-clip:text;padding-bottom:9px}
+.family{position:relative;margin:14px 0 0;padding:10px 32px 12px;border-top:1px solid #ffd32c99;border-bottom:1px solid #ffd32c99;font-size:24px;font-style:italic;line-height:1.15;color:white}.family span{display:block;color:#ffdb28;font-size:32px;font-weight:bold;margin-top:3px}
+.wish{color:#e0f4ff;font-size:16px;line-height:1.65;margin-top:17px}
+.lamps{height:115px;margin-top:0;gap:30px}.diya{background:linear-gradient(#117ee9,#1029a4 70%,#08145e);border-top-color:#ffe75d;box-shadow:0 10px 30px #0004,inset 0 -6px 0 #00caff22}.diya:after{color:#ffdd45}
+button{border-color:#ffe165aa;color:#ffe97d;background:#06135e99;margin-top:24px}button:hover{background:#1743b4}.sender{color:#a9efff;margin-top:18px}.sender strong{color:#ffe362}.signature{color:#b8d8ff;margin-top:18px}.corner{color:#ffe650}
+@media(min-width:700px){body:before,body:after{content:'';position:fixed;top:50%;width:min(52vw,760px);aspect-ratio:1;background:url('assets/kolam.svg') center/contain no-repeat;opacity:.12;pointer-events:none;transform:translateY(-50%)}body:before{left:-26vw}body:after{right:-26vw}}
+@media(max-width:540px){main{padding:32px 25px 26px}.brand{margin-bottom:13px;padding-bottom:11px}.brand img{width:168px}.eyebrow{font-size:7px;letter-spacing:.19em;margin-bottom:11px}.kolam{width:110px;height:110px;margin-bottom:11px}h1{font-size:clamp(54px,16vw,80px)}.family{font-size:20px;padding:8px 24px 10px;margin-top:9px}.family span{font-size:27px}.wish{font-size:13px;margin-top:13px}.lamps{height:92px;gap:20px}button{margin-top:19px}.sender{margin-top:14px}.signature{margin-top:13px;font-size:7px}.corner{top:31px}}
+@media(max-width:540px) and (max-height:740px){main{padding:28px 24px 24px}.brand img{width:148px}.brand{margin-bottom:10px}.kolam{width:80px;height:80px;margin-bottom:9px}.eyebrow{margin-bottom:8px}h1{font-size:clamp(48px,14vw,67px)}.family{font-size:18px;margin-top:6px}.family span{font-size:24px}.wish{font-size:12px;margin-top:10px}.lamps{height:83px}button{margin-top:15px}.sender{margin-top:10px}.signature{margin-top:10px}}
+
   </style>
 </head>
 <body>
@@ -49,11 +67,11 @@
   <main>
     <span class="corner left" aria-hidden="true">✧</span><span class="corner right" aria-hidden="true">✧</span>
     <div class="brand"><img src="assets/westports-logo.png" alt="Westports" width="250" height="42"></div>
-    <p class="eyebrow">A celebration of light & love</p>
-    <div class="ornament" aria-hidden="true">· ✧ ·</div>
+    <p class="eyebrow">A celebration of light & togetherness</p>
+    <img class="kolam" src="assets/kolam.svg" alt="" aria-hidden="true" width="600" height="600">
     <h1>Happy<span>Deepavali</span></h1>
-    <div class="rule" aria-hidden="true"></div>
-    <p class="wish">May every little light bring you joy,<br>every new beginning bring you hope,<br>and your home be filled with love.</p>
+    <p class="family">Thousand Lights,<span>One Family</span></p>
+    <p class="wish">May the light we share bring us closer,<br>fill our hearts with joy,<br>and brighten every new beginning.</p>
     <div class="lamps" aria-hidden="true"><div class="diya"></div><div class="diya"></div><div class="diya"></div></div>
     <button id="celebrate" type="button">✦ &nbsp; Send a little light</button>
     <p class="sender">From<strong>IT DEPARTMENT</strong></p>
@@ -77,7 +95,7 @@
       if (reduced.matches) return;
       for(let i=0;i<45;i++) {
         const angle = Math.random()*Math.PI*2, speed = Math.random()*2.7+.8;
-        particles.push({x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,life:1,color:['#ffd68a','#e99a72','#fff1c1'][i%3]});
+        particles.push({x,y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,life:1,color:['#ffdb28','#33d9ff','#ffffff'][i%3]});
       }
     }
     function draw(time) {
