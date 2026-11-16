@@ -385,6 +385,32 @@ body.portal-entering:after{background:linear-gradient(180deg,transparent 25%,#48
 @media(max-width:350px){h1 .happy-word,h1 .deepavali-word{padding-left:4px;padding-right:4px}}
 @media(prefers-reduced-motion:reduce){h1 .happy-word,h1 .deepavali-word{animation:none!important}body.portal-entering main{animation:none!important}}
 
+
+/* IT atmosphere: connected circuits and sparse data signals at the edges. */
+.it-atmosphere{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0;opacity:.65}
+.it-network{position:absolute;inset:0;width:100%;height:100%;opacity:.5}.network-links{opacity:.28}.network-nodes{opacity:.65}.network-packets{stroke-dasharray:14 1850;stroke-dashoffset:0}
+.tech-code{position:absolute;font:22px monospace;color:#50ddff;opacity:.22}.code-left{left:4%;top:34%}.code-right{right:4%;top:64%}
+.data-bit{position:absolute;font:10px monospace;letter-spacing:.15em;color:#b7f4ff;opacity:.15}.bit-one{left:7%;top:14%}.bit-two{right:6%;top:29%}.bit-three{left:6%;top:68%}.bit-four{right:8%;top:84%}
+.portal-chip{position:absolute;width:31px;height:31px;right:-10px;bottom:12%;color:#85eeff;background:#071846;border:1px solid #46cde966;border-radius:8px;padding:4px;box-shadow:0 0 14px #08ceff22;transform:rotate(12deg)}.portal-chip svg{display:block;width:100%;height:100%}
+.greeting-portrait{background:conic-gradient(from 0deg,#ffe172,#ffcb28,#b7fcff,#19d8ff,#ffe172)}
+.greeting-portrait img{box-shadow:inset 0 0 10px #5cefff33}
+.department-centre .sender strong:before{content:'';position:absolute;inset:-3px -8px;border:1px solid #38cfff33;border-top-color:transparent;border-bottom-color:transparent;border-radius:3px;pointer-events:none}
+@media(prefers-reduced-motion:no-preference){
+ .network-packets path{animation:network-data 8s linear infinite}.network-packets path:nth-child(2){animation-direction:reverse;animation-delay:-4s}
+ .network-nodes circle{animation:network-heartbeat 3s ease-in-out infinite}
+ .tech-code{animation:code-drift 7s ease-in-out infinite}.code-right{animation-delay:-3.5s}
+ .data-bit{animation:binary-flow 8s linear infinite}.bit-two{animation-delay:-2s}.bit-three{animation-delay:-4s}.bit-four{animation-delay:-6s}
+ .portal-chip{animation:chip-float 3s ease-in-out infinite}
+ .greeting-portrait:before{border-style:dashed;border-color:#85f1ff #ffe172 #85f1ff #ffe172;animation:frame-orbit 9s linear infinite}
+ .department-centre .sender strong:before{animation:network-heartbeat 2.5s ease-in-out infinite}
+ @keyframes network-data{to{stroke-dashoffset:-1864}}
+ @keyframes network-heartbeat{0%,100%{opacity:.3}50%{opacity:1}}
+ @keyframes code-drift{0%,100%{transform:translateY(0);opacity:.13}50%{transform:translateY(-12px);opacity:.3}}
+ @keyframes binary-flow{0%{transform:translateY(18px);opacity:0}25%,75%{opacity:.2}100%{transform:translateY(-65px);opacity:0}}
+ @keyframes chip-float{50%{transform:translateY(-5px) rotate(-5deg)}}
+}
+@media(max-width:540px){.it-atmosphere{opacity:.45}.tech-code{font-size:16px}.data-bit{font-size:8px}.it-network{opacity:.4}}
+
 </style>
 </head>
 <body>
@@ -392,7 +418,7 @@ body.portal-entering:after{background:linear-gradient(180deg,transparent 25%,#48
   <audio id="background-music" src="assets/chammak-challo.mp3" preload="auto" loop></audio>
   <section class="welcome" id="welcome" aria-label="Open your Deepavali greeting" hidden>
     <img class="welcome-logo" src="assets/westports-logo.png" alt="Westports" width="250" height="42">
-    <div class="portal" aria-hidden="true"><span class="portal-ring ring-one"></span><span class="portal-ring ring-two"></span><span class="portal-orbit"></span><img class="welcome-art" src="assets/kolam.svg" alt="" width="600" height="600"><span class="portal-axis"></span></div>
+    <div class="portal" aria-hidden="true"><span class="portal-ring ring-one"></span><span class="portal-ring ring-two"></span><span class="portal-orbit"></span><img class="welcome-art" src="assets/kolam.svg" alt="" width="600" height="600"><span class="portal-axis"></span><span class="portal-chip"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="10" y="10" width="20" height="20" rx="3"/><rect x="15" y="15" width="10" height="10" rx="1"/><path d="M15 3V10M25 3V10M15 30V37M25 30V37M3 15H10M3 25H10M30 15H37M30 25H37"/></svg></span></div>
     <div class="tech-traces" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="welcome-intro"><span class="portal-caption">WESTPORTS IT · CONNECTING OUR CELEBRATION</span><p>Start with your selfie<em>Light up Deepavali ✨</em></p></div>
     <div class="selfie-preview" id="selfie-preview" hidden><img id="preview-photo" alt="Your selected photo" width="180" height="180"></div>
     <div class="photo-options"><button type="button" id="take-selfie">📷 Take a selfie</button><button type="button" id="choose-photo">Choose a photo</button></div>
@@ -404,6 +430,7 @@ body.portal-entering:after{background:linear-gradient(180deg,transparent 25%,#48
     <small>Take your selfie to create your personal Deepavali card.<br>Your photo stays on this device. Nothing is uploaded.</small>
     <span class="from-it">FROM IT DEPARTMENT</span>
   </section>
+  <div class="it-atmosphere" aria-hidden="true"><svg class="it-network" viewBox="0 0 1000 1400" preserveAspectRatio="none" aria-hidden="true"><g class="network-links" fill="none" stroke="#39cfff" stroke-width="1"><path d="M25 100H120V220H60V360H150V480H45V670H125V850H55V1040H150V1250H25"/><path d="M975 90H880V230H945V370H850V500H960V690H875V880H950V1060H850V1270H975"/><path d="M80 20V100M910 20V90M25 480H150M850 500H975M55 1040H150M850 1060H975"/></g><g class="network-nodes" fill="#9cf4ff"><circle cx="25" cy="100" r="3" style="animation-delay:-0s"/><circle cx="120" cy="220" r="3" style="animation-delay:-0.23s"/><circle cx="60" cy="360" r="3" style="animation-delay:-0.46s"/><circle cx="150" cy="480" r="3" style="animation-delay:-0.6900000000000001s"/><circle cx="45" cy="670" r="3" style="animation-delay:-0.92s"/><circle cx="125" cy="850" r="3" style="animation-delay:-1.1500000000000001s"/><circle cx="55" cy="1040" r="3" style="animation-delay:-1.3800000000000001s"/><circle cx="150" cy="1250" r="3" style="animation-delay:-1.61s"/><circle cx="975" cy="90" r="3" style="animation-delay:-1.84s"/><circle cx="880" cy="230" r="3" style="animation-delay:-2.0700000000000003s"/><circle cx="945" cy="370" r="3" style="animation-delay:-2.3000000000000003s"/><circle cx="850" cy="500" r="3" style="animation-delay:-2.5300000000000002s"/><circle cx="960" cy="690" r="3" style="animation-delay:-2.7600000000000002s"/><circle cx="875" cy="880" r="3" style="animation-delay:-2.99s"/><circle cx="950" cy="1060" r="3" style="animation-delay:-3.22s"/><circle cx="850" cy="1270" r="3" style="animation-delay:-3.45s"/></g><g class="network-packets" fill="none" stroke="#ffe387" stroke-width="2"><path d="M25 100H120V220H60V360H150V480H45V670H125V850H55V1040H150V1250H25"/><path d="M975 90H880V230H945V370H850V500H960V690H875V880H950V1060H850V1270H975"/></g></svg><span class="tech-code code-left">&lt;/&gt;</span><span class="tech-code code-right">{ }</span><span class="data-bit bit-one">01</span><span class="data-bit bit-two">10</span><span class="data-bit bit-three">01</span><span class="data-bit bit-four">10</span></div>
   <canvas id="sparkles" aria-hidden="true"></canvas>
   <main>
     <span class="corner left" aria-hidden="true">✧</span><span class="corner right" aria-hidden="true">✧</span>
