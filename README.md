@@ -12,4 +12,3 @@ For a local preview, open `index.html` in a browser.
 
 ## Private selfie greeting
 Visitors can use the camera/file picker, preview a centre-cropped photo, remove or replace it, or continue without a photo. The selected image is resized to 640 x 640 in browser memory. No photo upload, analytics, localStorage, database, or server storage is used. Refreshing clears the photo. Save my greeting generates a 1080 x 1560 PNG on the device. Camera picker and download presentation depend on the mobile browser.
-
