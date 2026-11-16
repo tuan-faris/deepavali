@@ -293,13 +293,8 @@ body.with-photo .wish{font-size:13px;line-height:1.5}
 </style>
 </head>
 <body>
-  <button type="button" id="music-toggle" class="music-toggle" aria-label="Play Chammak Challo" aria-expanded="false" aria-controls="music-panel">♫</button>
-  <section class="music-panel" id="music-panel" aria-label="Chammak Challo music player" hidden>
-    <div class="music-heading"><strong>♫ Chammak Challo · T-Series</strong><button type="button" id="close-music">Close ✕</button></div>
-    <iframe id="music-player" title="Chammak Challo official T-Series video" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <a href="https://www.youtube.com/watch?v=M4EZHGFK-1c" target="_blank" rel="noopener noreferrer">Open official song on YouTube ↗</a>
-    <p>Tap play if playback does not start. Closing this panel stops the music.</p>
-  </section>
+<button type="button" id="music-toggle" class="music-toggle" aria-label="Play background music" aria-pressed="false" title="Chammak Challo · Play music">♫</button>
+  <audio id="background-music" src="assets/chammak-challo.mp3" preload="auto" loop></audio>
   <section class="welcome" id="welcome" aria-label="Open your Deepavali greeting" hidden>
     <img class="welcome-logo" src="assets/westports-logo.png" alt="Westports" width="250" height="42">
     <img class="welcome-art" src="assets/kolam.svg" alt="" width="600" height="600">
@@ -518,18 +513,37 @@ body.with-photo .wish{font-size:13px;line-height:1.5}
     document.querySelector('#open-celebration').addEventListener('click',()=>openCelebration(true));
     document.addEventListener('fullscreenchange',resize);
     const musicToggle=document.querySelector('#music-toggle');
-    const musicPanel=document.querySelector('#music-panel');
-    const musicPlayer=document.querySelector('#music-player');
-    function closeMusic(){musicPanel.hidden=true;musicPlayer.removeAttribute('src');musicToggle.setAttribute('aria-expanded','false');musicToggle.focus({preventScroll:true});}
+    const backgroundMusic=document.querySelector('#background-music');
+    let musicMutedByUser=false, musicStarting=false, resumeMusic=false;
+    backgroundMusic.volume=.35;
+    function updateMusicControl(){
+      const playing=!backgroundMusic.paused;
+      musicToggle.textContent=playing?'♫':'♪';
+      musicToggle.setAttribute('aria-pressed',String(playing));
+      musicToggle.setAttribute('aria-label',playing?'Mute background music':'Play background music');
+      musicToggle.title=playing?'Chammak Challo · Mute music':'Chammak Challo · Play music';
+    }
+    async function startMusic(){
+      if(musicMutedByUser||document.hidden||musicStarting||!backgroundMusic.paused)return;
+      musicStarting=true;
+      try{await backgroundMusic.play();}catch(error){/* A real tap will retry if autoplay is blocked. */}
+      finally{musicStarting=false;updateMusicControl();}
+    }
     musicToggle.addEventListener('click',()=>{
-      if(!musicPanel.hidden){closeMusic();return;}
-      musicPanel.hidden=false;
-      musicToggle.setAttribute('aria-expanded','true');
-      musicPlayer.src='https://www.youtube-nocookie.com/embed/M4EZHGFK-1c?autoplay=1&playsinline=1&rel=0';
-      document.querySelector('#close-music').focus({preventScroll:true});
+      if(!backgroundMusic.paused){musicMutedByUser=true;backgroundMusic.pause();updateMusicControl();}
+      else{musicMutedByUser=false;startMusic();}
     });
-    document.querySelector('#close-music').addEventListener('click',closeMusic);
-    document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!musicPanel.hidden)closeMusic();});
+    // Capturing the first tap starts audio before opening the camera chooser.
+    document.addEventListener('click',event=>{if(!musicToggle.contains(event.target))startMusic();},true);
+    document.addEventListener('keydown',event=>{if((event.key==='Enter'||event.key===' ')&&event.target!==musicToggle)startMusic();},true);
+    backgroundMusic.addEventListener('play',updateMusicControl);
+    backgroundMusic.addEventListener('pause',updateMusicControl);
+    backgroundMusic.addEventListener('error',()=>{musicToggle.title='Music unavailable. Please refresh and try again.';});
+    document.addEventListener('visibilitychange',()=>{
+      if(document.hidden){resumeMusic=!backgroundMusic.paused;backgroundMusic.pause();}
+      else if(resumeMusic){resumeMusic=false;startMusic();}
+    });
+    updateMusicControl();startMusic();
     resize();
   </script>
 </body>
