@@ -219,6 +219,22 @@ body:not(.with-photo) .candle-duo{margin-bottom:26px}
  body.with-photo .candle-duo{height:76px}
  body.with-photo main h1{font-size:33px}
 }
+
+/* A spinning welcome kolam and a lively candle celebration. */
+@media(prefers-reduced-motion:no-preference){
+ .welcome-art{animation:welcome-kolam-spin 18s linear infinite;transform-origin:center}
+ .welcome.has-preview .selfie-preview{animation:portrait-light 2.4s ease-in-out infinite alternate}
+ .candle-character{animation:character-float 2.8s ease-in-out infinite}
+ .candle-character.girl{animation-delay:-1.4s}
+ .character-halo{animation:warm-pulse .85s ease-in-out infinite alternate}
+ .greeting-portrait{animation:portrait-light 2.4s ease-in-out infinite alternate}
+ .welcome-logo{animation:welcome-logo-glow 3s ease-in-out infinite alternate}
+ @keyframes welcome-kolam-spin{to{transform:rotate(360deg)}}
+ @keyframes character-float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-3px) rotate(1deg)}}
+ @keyframes portrait-light{from{box-shadow:0 0 12px #14dcff33,0 0 20px #ffdc2c11}to{box-shadow:0 0 22px #14dcff66,0 0 30px #ffdc2c33}}
+ @keyframes welcome-logo-glow{from{opacity:.8}to{opacity:1}}
+}
+
 </style>
 </head>
 <body>
