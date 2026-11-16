@@ -235,21 +235,30 @@ body:not(.with-photo) .candle-duo{margin-bottom:26px}
  @keyframes welcome-logo-glow{from{opacity:.8}to{opacity:1}}
 }
 
+
+/* Selfie is the primary opening action; skipping remains optional. */
+.photo-options{flex-direction:column;align-items:center;width:100%;max-width:290px;gap:8px}
+.photo-options #take-selfie{width:100%;min-height:54px;margin:0;padding:15px 22px;background:linear-gradient(115deg,#ffca25,#fff0a2 48%,#ffd23d);color:#07164e;border:1px solid #fff1ab;border-radius:28px;font-size:16px;font-weight:bold;box-shadow:0 5px 24px #ffce2944}
+.photo-options #take-selfie:hover{background:#fff0a2;transform:translateY(-1px)}
+.photo-options #choose-photo{background:transparent;min-height:38px;margin:0;padding:8px 16px;font-size:12px;border-color:#58dcff66}
+.welcome #open-celebration{order:2;background:transparent;color:#b1c9e9;border:0;border-radius:0;box-shadow:none;min-height:34px;padding:8px 12px;font-size:11px;font-weight:normal;text-decoration:underline}
+.welcome small{order:1}.welcome .from-it{order:3}
+@media(max-height:620px){.photo-options #take-selfie{min-height:48px;padding:12px 18px;font-size:14px}.photo-options{gap:5px}.welcome #open-celebration{min-height:30px;padding:5px 10px}}
 </style>
 </head>
 <body>
   <section class="welcome" id="welcome" aria-label="Open your Deepavali greeting" hidden>
     <img class="welcome-logo" src="assets/westports-logo.png" alt="Westports" width="250" height="42">
     <img class="welcome-art" src="assets/kolam.svg" alt="" width="600" height="600">
-    <p>Light up Deepavali<em>with your smile ✨</em></p>
+    <p>Start with your selfie<em>Light up Deepavali ✨</em></p>
     <div class="selfie-preview" id="selfie-preview" hidden><img id="preview-photo" alt="Your selected photo" width="180" height="180"></div>
-    <div class="photo-options"><button type="button" id="take-selfie">Take a selfie</button><button type="button" id="choose-photo">Choose a photo</button></div>
+    <div class="photo-options"><button type="button" id="take-selfie">📷 Take a selfie</button><button type="button" id="choose-photo">Choose a photo</button></div>
     <input id="camera-file" type="file" accept="image/*" capture="user" hidden>
     <input id="photo-file" type="file" accept="image/*" hidden>
     <p id="photo-status" class="photo-status" role="status"></p>
     <button id="remove-photo" class="text-action" type="button" hidden>Remove photo</button>
     <button id="open-celebration" type="button">Tap to light up Deepavali ✨</button>
-    <small>Your photo stays on this device. Nothing is uploaded.<br>You can also continue without a photo.</small>
+    <small>Take your selfie to create your personal Deepavali card.<br>Your photo stays on this device. Nothing is uploaded.</small>
     <span class="from-it">FROM IT DEPARTMENT</span>
   </section>
   <canvas id="sparkles" aria-hidden="true"></canvas>
