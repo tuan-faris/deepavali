@@ -155,15 +155,44 @@ button{margin-top:15px}.sender{margin-top:16px}.signature{max-width:90%;line-hei
 @media(max-width:540px){.celebration-scene{max-width:310px;gap:3px}.celebration-scene .celebrant{width:63px;height:88px;flex-basis:63px}.celebration-scene #celebrate{font-size:10px;padding:10px 12px;min-height:40px}}
 @media(max-width:540px) and (min-height:540px) and (orientation:portrait){.celebration-scene{height:clamp(70px,12svh,100px);margin:0;max-width:310px}.celebration-scene .celebrant{height:100%;width:63px}.celebration-scene #celebrate{padding:9px 11px;min-height:38px;font-size:10px}}
 @media(max-width:350px){.celebration-scene{gap:0}.celebration-scene .celebrant{width:49px;flex-basis:49px}.celebration-scene #celebrate{font-size:9px;padding:9px}}
+
+/* Private, browser-local selfie greeting. */
+.welcome{overflow-y:auto;justify-content:safe center;gap:14px;padding:28px 24px}.welcome>*{flex-shrink:0}.welcome-art{width:clamp(72px,15svh,130px)}.welcome p{font-size:16px}.welcome p em{font-size:24px}.welcome small{max-width:300px;line-height:1.6}
+.photo-options{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.photo-options button{margin:0;min-height:44px;padding:10px 18px;font-size:12px;background:#0c287c;border-color:#4ad8ef99}
+.selfie-preview{width:110px;height:110px;border-radius:50%;padding:4px;background:linear-gradient(135deg,#ffda42,#fff0ad,#1ad9ff);box-shadow:0 0 24px #1ad9ff22}.selfie-preview img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
+.welcome.has-preview .welcome-art{display:none}.welcome .photo-status{font:11px Arial,sans-serif;line-height:1.5;max-width:290px;color:#c9efff;min-height:0}.photo-status:empty{display:none}.welcome .text-action{margin:0;padding:4px 10px;min-height:32px;border:0;background:none;text-decoration:underline;font-size:11px}
+.greeting-portrait{margin:12px 0 0;width:120px;height:120px;flex-shrink:0;border-radius:50%;padding:4px;background:linear-gradient(135deg,#ffd32b,#fff7bb 45%,#23dafa);box-shadow:0 0 20px #06d9ff33}
+.greeting-portrait img{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%;border:2px solid #061764}
+.portrait-actions{display:flex;justify-content:center;gap:10px}.portrait-actions button{margin:5px 0;min-height:34px;padding:7px 12px;font-size:10px}.portrait-actions #save-greeting{background:#ffe075;color:#07164f;font-weight:bold}.portrait-actions #change-photo{border-color:#75dfff88;color:#b5f2ff}
+body.with-photo main h1{font-size:clamp(48px,7svh,80px)}
+@media(max-width:540px) and (min-height:540px) and (orientation:portrait){
+ body.with-photo main{padding-top:23px;padding-bottom:20px}
+ body.with-photo main h1{font-size:clamp(35px,6.8svh,59px)}
+ body.with-photo .greeting-portrait{width:clamp(62px,12svh,105px);height:clamp(62px,12svh,105px);margin:0;padding:3px}
+ body.with-photo .family{font-size:13px;padding:3px 20px}.with-photo .family span{font-size:19px}
+ body.with-photo .wish{font-size:10px;line-height:1.35}
+ body.with-photo .portrait-actions{gap:8px}.with-photo .portrait-actions button{margin:0;min-height:30px;padding:6px 9px;font-size:9px}
+ body.with-photo .lamps{height:70px;padding-top:42px;padding-bottom:14px}.with-photo .flame{height:28px}.with-photo .diya:nth-child(2) .flame{height:36px}
+ body.with-photo .celebration-scene{height:60px}.with-photo .sender{font-size:8px}.with-photo .sender strong{font-size:11px}
+}
+@media(max-height:620px){.welcome{gap:9px;padding-top:23px;padding-bottom:23px}.welcome-art{width:66px}.selfie-preview{width:76px;height:76px}.welcome-logo{width:140px}.welcome p em{font-size:21px}#open-celebration{min-height:44px;padding:10px 16px;font-size:12px}}
+
+.save-status{font:10px Arial,sans-serif;color:#c9efff;margin:0;max-width:260px;line-height:1.4;text-align:center}.save-status:empty{display:none}button:disabled{opacity:.6;cursor:wait}
 </style>
 </head>
 <body>
   <section class="welcome" id="welcome" aria-label="Open your Deepavali greeting" hidden>
     <img class="welcome-logo" src="assets/westports-logo.png" alt="Westports" width="250" height="42">
     <img class="welcome-art" src="assets/kolam.svg" alt="" width="600" height="600">
-    <p>Thousand Lights,<em>One Family</em></p>
+    <p>Light up Deepavali<em>with your smile ✨</em></p>
+    <div class="selfie-preview" id="selfie-preview" hidden><img id="preview-photo" alt="Your selected photo" width="180" height="180"></div>
+    <div class="photo-options"><button type="button" id="take-selfie">Take a selfie</button><button type="button" id="choose-photo">Choose a photo</button></div>
+    <input id="camera-file" type="file" accept="image/*" capture="user" hidden>
+    <input id="photo-file" type="file" accept="image/*" hidden>
+    <p id="photo-status" class="photo-status" role="status"></p>
+    <button id="remove-photo" class="text-action" type="button" hidden>Remove photo</button>
     <button id="open-celebration" type="button">Tap to light up Deepavali ✨</button>
-    <small>Tap to celebrate · Fullscreen where supported</small>
+    <small>Your photo stays on this device. Nothing is uploaded.<br>You can also continue without a photo.</small>
     <span class="from-it">FROM IT DEPARTMENT</span>
   </section>
   <canvas id="sparkles" aria-hidden="true"></canvas>
@@ -173,6 +202,9 @@ button{margin-top:15px}.sender{margin-top:16px}.signature{max-width:90%;line-hei
     <p class="eyebrow">A celebration of light & togetherness</p>
     <h1 tabindex="-1">Happy<span>Deepavali</span></h1>
     <p class="family">Thousand Lights,<span>One Family</span></p>
+    <figure id="greeting-portrait" class="greeting-portrait" hidden><img id="greeting-photo" alt="Your personal Deepavali portrait" width="640" height="640"></figure>
+    <div class="portrait-actions" id="portrait-actions" hidden><button type="button" id="save-greeting">Save my greeting</button><button type="button" id="change-photo">Change photo</button></div>
+    <p id="save-status" class="save-status" role="status"></p>
     <p class="wish">May the light we share bring us closer,<br>fill our hearts with joy,<br>and brighten every new beginning.</p>
     <div class="lamps" aria-hidden="true"><div class="diya"><span class="light-halo"></span><span class="wick"></span><span class="flame"><i></i></span><span class="orbit"></span></div><div class="diya"><span class="light-halo"></span><span class="wick"></span><span class="flame"><i></i></span><span class="orbit"></span></div><div class="diya"><span class="light-halo"></span><span class="wick"></span><span class="flame"><i></i></span><span class="orbit"></span></div></div>
     <div class="celebration-scene" role="group" aria-label="Celebrate with sparklers"><svg viewBox="0 0 130 140" aria-hidden="true" class="celebrant"><g class="person-body"><circle cx="61" cy="45" r="10" fill="#e8b77e"/><path d="M50 40Q51 24 64 32Q76 34 71 45L66 38Z" fill="#10234b"/><path d="M50 61Q61 54 72 61L80 103H43Z" fill="#13cde8" stroke="#b0f9ff" stroke-width="1.5"/><path d="M52 104L49 130M69 104L75 130" stroke="#ecdcbd" stroke-width="7" stroke-linecap="round"/><path d="M50 65L31 89" stroke="#e8b77e" stroke-width="6" stroke-linecap="round"/><g class="sparkler-arm"><path d="M72 65L92 48L99 32" stroke="#e8b77e" stroke-width="6" stroke-linecap="round" fill="none"/><path d="M99 32L105 13" stroke="#e4f7ff" stroke-width="2"/><g class="sparkler-rays" stroke="#ffe27a" stroke-width="2" stroke-linecap="round"><path d="M105 0V6M105 20V27M91 13H97M113 13H121M95 3L100 8M111 19L117 25M95 23L100 18M112 7L117 2"/><circle cx="105" cy="13" r="3" fill="#fff" stroke="none"/></g></g></g><ellipse cx="60" cy="136" rx="30" ry="2" fill="#3be4ff" opacity=".3"/></svg><button id="celebrate" type="button">✦ &nbsp; Send a little light</button><svg viewBox="0 0 130 140" aria-hidden="true" class="celebrant"><g class="person-body"><circle cx="61" cy="45" r="10" fill="#e8b77e"/><path d="M50 40Q51 24 64 32Q76 34 71 45L66 38Z" fill="#10234b"/><path d="M50 61Q61 54 72 61L80 103H43Z" fill="#13cde8" stroke="#b0f9ff" stroke-width="1.5"/><path d="M52 104L49 130M69 104L75 130" stroke="#ecdcbd" stroke-width="7" stroke-linecap="round"/><path d="M50 65L31 89" stroke="#e8b77e" stroke-width="6" stroke-linecap="round"/><g class="sparkler-arm"><path d="M72 65L92 48L99 32" stroke="#e8b77e" stroke-width="6" stroke-linecap="round" fill="none"/><path d="M99 32L105 13" stroke="#e4f7ff" stroke-width="2"/><g class="sparkler-rays" stroke="#ffe27a" stroke-width="2" stroke-linecap="round"><path d="M105 0V6M105 20V27M91 13H97M113 13H121M95 3L100 8M111 19L117 25M95 23L100 18M112 7L117 2"/><circle cx="105" cy="13" r="3" fill="#fff" stroke="none"/></g></g></g><ellipse cx="60" cy="136" rx="30" ry="2" fill="#3be4ff" opacity=".3"/></svg></div>
@@ -236,8 +268,101 @@ button{margin-top:15px}.sender{margin-top:16px}.signature{max-width:90%;line-hei
     });
     addEventListener('resize',resize);reduced.addEventListener('change',start);
     document.addEventListener('visibilitychange',()=>{document.body.classList.toggle('motion-paused',document.hidden);if(document.hidden)cancelAnimationFrame(frame);else start()});
+
+    // The selected image is resized in memory; no network or persistent storage.
+    let photoData = '', photoBusy = false, photoVersion = 0;
+    const photoStatus = document.querySelector('#photo-status');
+    const openButton = document.querySelector('#open-celebration');
+    const previewPhoto = document.querySelector('#preview-photo');
+    const greetingPhoto = document.querySelector('#greeting-photo');
+    function syncPhoto() {
+      const present = Boolean(photoData);
+      document.querySelector('#selfie-preview').hidden = !present;
+      document.querySelector('#remove-photo').hidden = !present;
+      document.querySelector('#greeting-portrait').hidden = !present;
+      document.querySelector('#portrait-actions').hidden = !present;
+      welcome.classList.toggle('has-preview', present);
+      document.body.classList.toggle('with-photo', present);
+      openButton.textContent = present ? 'Light up my greeting ✨' : 'Continue without photo ✨';
+      if(present){previewPhoto.src = photoData; greetingPhoto.src = photoData;}
+      else {previewPhoto.removeAttribute('src');greetingPhoto.removeAttribute('src');}
+    }
+    async function selectPhoto(event) {
+      const file = event.target.files[0];
+      event.target.value = '';
+      if(!file) return;
+      if(!file.type.startsWith('image/')){photoStatus.textContent='Please choose a photo.';return;}
+      if(file.size > 20*1024*1024){photoStatus.textContent='Please choose a photo smaller than 20 MB.';return;}
+      const version = ++photoVersion;
+      photoBusy = true;openButton.disabled = true;photoStatus.textContent='Preparing your photo…';
+      const url = URL.createObjectURL(file);
+      try {
+        const image = new Image();
+        await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=reject;image.src=url;});
+        if(version !== photoVersion) return;
+        const side = Math.min(image.naturalWidth,image.naturalHeight);
+        if(!side) throw Error('Empty image');
+        const buffer = document.createElement('canvas');buffer.width=640;buffer.height=640;
+        buffer.getContext('2d').drawImage(image,(image.naturalWidth-side)/2,(image.naturalHeight-side)/2,side,side,0,0,640,640);
+        photoData=buffer.toDataURL('image/jpeg',.9);
+        syncPhoto();photoStatus.textContent='Your photo is ready. Retake or choose another if you wish.';
+      } catch(error) {
+        if(version===photoVersion) photoStatus.textContent='This photo could not be opened. Try a JPG or PNG, or continue without a photo.';
+      } finally {
+        URL.revokeObjectURL(url);
+        if(version===photoVersion){photoBusy=false;openButton.disabled=false;}
+      }
+    }
+    document.querySelector('#take-selfie').addEventListener('click',()=>document.querySelector('#camera-file').click());
+    document.querySelector('#choose-photo').addEventListener('click',()=>document.querySelector('#photo-file').click());
+    document.querySelector('#camera-file').addEventListener('change',selectPhoto);
+    document.querySelector('#photo-file').addEventListener('change',selectPhoto);
+    document.querySelector('#remove-photo').addEventListener('click',()=>{photoData='';syncPhoto();photoStatus.textContent='Photo removed from your greeting.';});
+    document.querySelector('#change-photo').addEventListener('click',()=>{
+      celebrationOpened=false;cancelAnimationFrame(frame);greeting.hidden=true;welcome.hidden=false;
+      document.body.classList.add('celebration-waiting');
+      document.querySelector('#take-selfie').focus({preventScroll:true});
+    });
+    async function saveGreeting() {
+      if(!photoData) return;
+      const button=document.querySelector('#save-greeting');const status=document.querySelector('#save-status');
+      button.disabled=true;status.textContent='Preparing your greeting image…';
+      try {
+        const portrait=new Image();portrait.src=photoData;await portrait.decode();
+        const card=document.createElement('canvas');card.width=1080;card.height=1560;
+        const c=card.getContext('2d');
+        const bg=c.createRadialGradient(540,650,40,540,650,1050);bg.addColorStop(0,'#1640bd');bg.addColorStop(1,'#030b38');c.fillStyle=bg;c.fillRect(0,0,1080,1560);
+        c.strokeStyle='#ffdb43';c.lineWidth=4;c.beginPath();c.roundRect(32,32,1016,1496,[160,160,32,32]);c.stroke();
+        c.strokeStyle='#b5eaff';c.lineWidth=1;c.beginPath();c.roundRect(46,46,988,1468,[150,150,24,24]);c.stroke();
+        // Use the bundled official logo without sending the portrait anywhere.
+        const logo=document.querySelector('.brand img');
+        if(!logo.complete) await logo.decode();
+        const stamp=document.createElement('canvas');stamp.width=500;stamp.height=100;
+        const sc=stamp.getContext('2d');sc.drawImage(logo,0,0,500,84);sc.globalCompositeOperation='source-in';sc.fillStyle='#fff';sc.fillRect(0,0,500,100);c.drawImage(stamp,340,88,400,80);
+        c.textAlign='center';c.fillStyle='#b5f4ff';c.font='18px Arial';c.fillText('A CELEBRATION OF LIGHT & TOGETHERNESS',540,213);
+        c.fillStyle='#fff';c.font='96px Georgia';c.fillText('Happy',540,335);
+        c.fillStyle='#ffe16b';c.font='italic 132px Georgia';c.fillText('Deepavali',540,470);
+        c.save();c.beginPath();c.arc(540,740,200,0,Math.PI*2);c.clip();c.drawImage(portrait,340,540,400,400);c.restore();
+        c.strokeStyle='#ffe16b';c.lineWidth=9;c.beginPath();c.arc(540,740,207,0,Math.PI*2);c.stroke();
+        c.strokeStyle='#45dcff';c.lineWidth=2;c.beginPath();c.arc(540,740,218,0,Math.PI*2);c.stroke();
+        c.fillStyle='#fff';c.font='italic 48px Georgia';c.fillText('Thousand Lights,',540,1040);
+        c.fillStyle='#ffde38';c.font='bold italic 63px Georgia';c.fillText('One Family',540,1116);
+        c.fillStyle='#e0f4ff';c.font='28px Georgia';c.fillText('May the light we share bring us closer,',540,1200);c.fillText('fill our hearts with joy,',540,1245);c.fillText('and brighten every new beginning.',540,1290);
+        c.fillStyle='#b4efff';c.font='22px Arial';c.fillText('FROM',540,1390);c.fillStyle='#ffe16b';c.font='bold 35px Arial';c.fillText('IT DEPARTMENT',540,1442);
+        // Small gold and cyan sparks stay outside the face and lettering.
+        for(let i=0;i<70;i++){const x=i%2?65+(i*37)%130:885+(i*23)%130,y=170+(i*113)%1160;c.fillStyle=i%3?'#ffdb43':'#51e8ff';c.beginPath();c.arc(x,y,2+i%3,0,Math.PI*2);c.fill();}
+        const blob=await new Promise(resolve=>card.toBlob(resolve,'image/png'));
+        if(!blob) throw Error('Could not create image');
+        const downloadUrl=URL.createObjectURL(blob);const link=document.createElement('a');link.href=downloadUrl;link.download='My-Deepavali-Greeting.png';link.click();setTimeout(()=>URL.revokeObjectURL(downloadUrl),60000);
+        status.textContent='Your greeting image is ready. Check your downloads.';
+      } catch(error){status.textContent='Could not save the image. Please try again.';}
+      finally{button.disabled=false;}
+    }
+    document.querySelector('#save-greeting').addEventListener('click',saveGreeting);
+    syncPhoto();
+
     document.querySelector('#open-celebration').addEventListener('click', () => {
-      if (celebrationOpened) return;
+      if (celebrationOpened || photoBusy) return;
       // Request synchronously inside the tap so browser activation is preserved.
       const root = document.documentElement;
       try {
